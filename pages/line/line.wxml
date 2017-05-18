@@ -1,0 +1,9 @@
+<!-- line.wxml -->
+<view class="container">
+  <view class="chart-container">
+    <canvas class="canvas" canvas-id="baseLine" />
+  </view>
+  <view class="chart-container">
+    <canvas class="canvas" canvas-id="multiLine" />
+  </view>
+</view>
