@@ -1,7 +1,7 @@
 /*!
  * wx-chart.js
  * Chart for WeiXin application
- * Version: 1.0.0
+ * Version: 0.1.1
  *
  * Copyright 2016 Jone Casper
  * Released under the MIT license
@@ -25,7 +25,7 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
             g = self;
         } else {
             g = this;
-        }g.wxChart = f();
+        }g.WxChart = f();
     }
 })(function () {
     var define, module, exports;return function e(t, n, r) {
@@ -909,8 +909,8 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
                 }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
             }
 
-            // Doughut default config
-            var WX_DOUGHUT_DEFAULT_CONFIG = {
+            // Doughnut default config
+            var WX_DOUGHNUT_DEFAULT_CONFIG = {
                 legendOptions: {
                     'position': 'bottom'
                 },
@@ -940,7 +940,7 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
             };
 
             /**
-             * Doughut item config
+             * Doughnut item config
              *
              * value: The value of chart
              * label: The legend text
@@ -948,7 +948,7 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
              * radius: The percentage of radius, default is '100'
              * legend: [Object] legend options
              */
-            var WX_DOUGHUT_ITEM_DEFAULT_CONFIG = {
+            var WX_DOUGHNUT_ITEM_DEFAULT_CONFIG = {
                 display: true,
                 fontSize: 11,
                 percentage: 100
@@ -979,7 +979,7 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
                     var _this = _possibleConstructorReturn(this, (WxDoughnut.__proto__ || Object.getPrototypeOf(WxDoughnut)).call(this, id, config));
 
                     var me = _this;
-                    me.chartConfig = (0, _helper.extend)({}, WX_DOUGHUT_DEFAULT_CONFIG, config);
+                    me.chartConfig = (0, _helper.extend)({}, WX_DOUGHNUT_DEFAULT_CONFIG, config);
 
                     me.title = null;
                     // Initialize title and legend
@@ -1011,7 +1011,7 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
                     key: 'update',
                     value: function update(datasets) {
                         var me = this;
-                        _get(WxDoughnut.prototype.__proto__ || Object.getPrototypeOf(WxDoughnut.prototype), 'update', this).call(this, datasets, WX_DOUGHUT_ITEM_DEFAULT_CONFIG);
+                        _get(WxDoughnut.prototype.__proto__ || Object.getPrototypeOf(WxDoughnut.prototype), 'update', this).call(this, datasets, WX_DOUGHNUT_ITEM_DEFAULT_CONFIG);
                         me.wxLayout.removeAllBox();
                         return me.draw();
                     }
@@ -2074,6 +2074,8 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
                         var canvas = me.canvas,
                             cvWidth = canvas.width,
                             cvHeight = canvas.height;
+                        config.width = cvWidth;
+                        config.height = cvHeight;
                         config.aspectRatio = config.aspectRatio ? config.aspectRatio : !_helper.is.Undefined(cvHeight) && !_helper.is.Undefined(cvWidth) ? (cvWidth / cvWidth).toFixed(2) : null;
                         config.display = config.display || 'block';
                         return config;
@@ -2096,7 +2098,7 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
 
                         // calculate box
                         var padding = me.config.padding || 0;
-                        me.innerBox = new _layout.BoxInstance('top', 0, 0, me.canvas.width - padding * 2, me.canvas.height - padding * 2, me.canvas.width, me.canvas.height);
+                        me.innerBox = new _layout.BoxInstance('top', 0, 0, me.config.width - padding * 2, me.config.height - padding * 2, me.config.width, me.config.height);
                     }
                 }, {
                     key: 'clear',
@@ -6468,7 +6470,7 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
                             canvas = void 0,
                             context = void 0;
                         if (_helper.is.String(id)) {
-                            canvas = me.isWeiXinAPP ? context = wx.createCanvasContext(id) : document.getElementById(id).canvas;
+                            canvas = me.isWeiXinAPP ? context = wx.createCanvasContext(id) : document.getElementById(id);
                         } else if (me.isWeiXinAPP) {
                             throw new Error('Should set an id');
                         }
@@ -6481,7 +6483,7 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
                             console.error("Failed to create WxCanvas: can't acquire context!");
                         }
 
-                        this.initCanvas();
+                        this.initCanvas(canvas);
                         return { canvas: canvas, context: context };
                     }
 
@@ -6491,9 +6493,8 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
 
                 }, {
                     key: 'initCanvas',
-                    value: function initCanvas() {
-                        var canvas = this._canvas,
-                            config = this._config,
+                    value: function initCanvas(canvas) {
+                        var config = this._config,
                             renderHeight = void 0,
                             renderWidth = void 0,
                             display = void 0,
@@ -6520,6 +6521,7 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
                                 var displayWidth = (0, _helper.readUsedSize)(canvas, 'width');
                                 if (displayWidth !== undefined) {
                                     canvas.width = displayWidth;
+                                    width = displayWidth;
                                 }
                             }
 
@@ -6528,11 +6530,12 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
                                     // If no explicit render height and style height, let's apply the aspect ratio,
                                     // which one can be specified by the user but also by charts as default option
                                     // (i.e. options.aspectRatio). If not specified, use canvas aspect ratio of 2.
-                                    canvas.height = canvas.width / (config.options.aspectRatio || 2);
+                                    canvas.height = height = canvas.width / (config.options.aspectRatio || 2);
                                 } else {
                                     var displayHeight = (0, _helper.readUsedSize)(canvas, 'height');
                                     if (displayWidth !== undefined) {
                                         canvas.height = displayHeight;
+                                        height = displayHeight;
                                     }
                                 }
                             }
@@ -6635,6 +6638,7 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
                             if (renderHeight === null || renderHeight === '') {
                                 return (0, _helper.readUsedSize)(canvas, 'height');
                             }
+                            return renderHeight;
                         }
                     },
                     set: function set(val) {
@@ -6654,6 +6658,7 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
                             if (renderWidth === null || renderWidth === '') {
                                 return (0, _helper.readUsedSize)(canvas, 'width');
                             }
+                            return renderWidth;
                         }
                     },
                     set: function set(val) {
