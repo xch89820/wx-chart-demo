@@ -1,8 +1,8 @@
 {
   "pages":[
+    "pages/pie/pie",
     "pages/line/line",
-    "pages/index/index",
-    "pages/logs/logs"
+    "pages/bar/bar"
   ],
   "window":{
     "backgroundTextStyle":"light",
@@ -20,15 +20,15 @@
       "iconPath": "images/icon_API.png",
       "selectedIconPath": "images/icon_API_HL.png"
     },{
-      "pagePath": "pages/index/index",
-      "text":"开始",
+      "pagePath": "pages/bar/bar",
+      "text":"柱状图",
       "iconPath": "images/icon_API.png",
       "selectedIconPath": "images/icon_API_HL.png"
     },{
-      "pagePath": "pages/logs/logs",
-      "text":"日志",
-      "iconPath": "images/icon_component.png",
-      "selectedIconPath": "images/icon_component_HL.png"
+      "pagePath": "pages/pie/pie",
+      "text":"饼状图",
+      "iconPath": "images/icon_API.png",
+      "selectedIconPath": "images/icon_API_HL.png"
     }]
   }
 }

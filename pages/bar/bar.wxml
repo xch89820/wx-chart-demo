@@ -1,0 +1,33 @@
+<!-- bar.wxml -->
+<view class="container">
+  
+  <view class="chart-container">
+    <text class="example-title">单数据柱状图</text>
+    <canvas class="canvas" canvas-id="baseBar" />
+    <button class="change-button" type="primary" bindtap="changeChart" data-canvas-name="baseBar"> 变换数据 </button>
+  </view>
+
+  <view class="chart-container">
+    <text class="example-title">多数据柱状图</text>
+    <canvas class="canvas" canvas-id="multiBar" />
+    <button class="change-button" type="primary" bindtap="changeChart" data-canvas-name="multiBar"> 变换数据 </button>
+  </view>
+
+  <view class="chart-container">
+    <text class="example-title">多数据柱状图2</text>
+    <canvas class="canvas" canvas-id="multiNegBar" />
+    <button class="change-button" type="primary" bindtap="changeChart" data-canvas-name="multiNegBar"> 变换数据 </button>
+  </view>
+
+  <view class="chart-container">
+    <text class="example-title">多数据堆叠图</text>
+    <canvas class="canvas" canvas-id="multiStackBar" />
+    <button class="change-button" type="primary" bindtap="changeChart" data-canvas-name="multiStackBar"> 变换数据 </button>
+  </view>
+
+  <view class="chart-container">
+    <text class="example-title">多数据堆叠图(含负向)</text>
+    <canvas class="canvas" canvas-id="multiStackNegBar" />
+    <button class="change-button" type="primary" bindtap="changeChart" data-canvas-name="multiStackNegBar"> 变换数据 </button>
+  </view>
+</view>

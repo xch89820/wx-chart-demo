@@ -332,6 +332,7 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
                         me._labels = null;
                         me._legends = null;
                         _get(WxBar.prototype.__proto__ || Object.getPrototypeOf(WxBar.prototype), 'update', this).call(this, datasets, WX_BAR_ITEM_DEFAULT_CONFIG);
+                        me.wxLayout.removeAllBox();
                         return me.draw();
                     }
                     /**
@@ -910,6 +911,9 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
 
             // Doughut default config
             var WX_DOUGHUT_DEFAULT_CONFIG = {
+                legendOptions: {
+                    'position': 'bottom'
+                },
                 // The percentage of the chart that we cut out of the middle.
                 cutoutPercentage: 50,
 
@@ -946,7 +950,7 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
              */
             var WX_DOUGHUT_ITEM_DEFAULT_CONFIG = {
                 display: true,
-                fontSize: 10,
+                fontSize: 11,
                 percentage: 100
             };
 
@@ -1008,6 +1012,7 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
                     value: function update(datasets) {
                         var me = this;
                         _get(WxDoughnut.prototype.__proto__ || Object.getPrototypeOf(WxDoughnut.prototype), 'update', this).call(this, datasets, WX_DOUGHUT_ITEM_DEFAULT_CONFIG);
+                        me.wxLayout.removeAllBox();
                         return me.draw();
                     }
 
@@ -1020,6 +1025,7 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
                     value: function draw() {
                         var box = void 0,
                             me = this,
+                            labelDistancePercentage = me.chartConfig.labelDistancePercentage,
                             wxLayout = me.wxLayout;
                         var _me$chartConfig = me.chartConfig,
                             cutoutPercentage = _me$chartConfig.cutoutPercentage,
@@ -1085,10 +1091,20 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
                             outerHeight = _box.outerHeight;
 
                         var minSize = Math.min(width, height);
-                        var outerRadius = Math.max((minSize - borderWidth * 2) / 2, 0);
+                        var outerRadius = Math.max((minSize - borderWidth * 2) / 2, 0) - 10;
+                        var totalValue = me.calculateTotal(),
+                            longestLabelWidth = me._longestLabel(totalValue),
+                            maximalFontSize = me._maximalLabelFontSize(),
+                            shouldSpace = longestLabelWidth + maximalFontSize + outerRadius * labelDistancePercentage;
+
+                        // Calculate the space between pie's border and margin of chart
+                        var widthSpace = (width - (outerRadius + borderWidth) * 2) / 2;
+                        if (widthSpace < shouldSpace) {
+                            outerRadius -= shouldSpace - widthSpace;
+                        }
+
                         var innerRadius = cutoutPercentage ? outerRadius / 100 * cutoutPercentage : 0,
                             innerRadiusColor = me.config.backgroundColor || "#ffffff";
-                        var totalValue = me.calculateTotal();
                         var pointX = x + outerWidth / 2,
                             pointY = y + outerHeight / 2;
 
@@ -1134,11 +1150,12 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
                             percentage = dataset.percentage,
                             hidden = dataset.hidden;
 
-                        var currentRadius = (outerRadius - innerRadius) / 100 * percentage;
-
                         if (!!hidden) {
                             return endAngle;
                         }
+
+                        var centerAngle = startAngle + (endAngle - startAngle) / 2;
+                        var currentRadius = outerRadius / 100 * percentage;
 
                         ctx.save();
                         ctx.beginPath();
@@ -1184,13 +1201,13 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
                             format = dataset.format,
                             hidden = dataset.hidden;
 
-                        var currentRadius = (outerRadius - innerRadius) / 100 * percentage;
-                        label = _helper.is.Function(format) ? format.call(me, label, value, totalValue, currentRadius, dataset, options) : label;
-
                         if (!!hidden) {
                             return;
                         }
+
                         var centerAngle = startAngle + (endAngle - startAngle) / 2;
+                        var currentRadius = outerRadius / 100 * percentage;
+                        label = _helper.is.Function(format) ? format.call(me, label, value, totalValue, currentRadius, dataset, options) : label;
 
                         // Line start point
                         var startX = Math.cos(centerAngle) * currentRadius + pointX;
@@ -1233,6 +1250,44 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
                         ctx.draw();
                         ctx.restore();
                     }
+                }, {
+                    key: '_longestLabel',
+
+                    // Get longest label
+                    value: function _longestLabel(totalValue) {
+                        var me = this,
+                            visDatasets = me.visDatasets,
+                            ctx = me.ctx;
+                        var maxLabelWidth = 0;
+                        visDatasets.forEach(function (dataset) {
+                            var label = dataset.label,
+                                value = dataset.value,
+                                format = dataset.format;
+
+                            label = _helper.is.Function(format) ? format.call(me, label, value, totalValue, 0, dataset) : label;
+                            var textLen = ctx.measureText(label).width;
+
+                            maxLabelWidth = textLen > maxLabelWidth ? textLen : maxLabelWidth;
+                        });
+                        return maxLabelWidth;
+                    }
+                    // Get maximal font size of label
+
+                }, {
+                    key: '_maximalLabelFontSize',
+                    value: function _maximalLabelFontSize() {
+                        var me = this,
+                            visDatasets = me.visDatasets;
+                        var max = 0;
+                        visDatasets.forEach(function (dataset) {
+                            var fontSize = dataset.fontSize;
+
+                            max = fontSize > max ? fontSize : max;
+                        });
+                        return max;
+                    }
+                    // Avoid Collision
+
                 }, {
                     key: 'initAvoidCollision',
                     value: function initAvoidCollision() {
@@ -1541,6 +1596,7 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
                         me._labels = null;
                         me._legends = null;
                         _get(WxLiner.prototype.__proto__ || Object.getPrototypeOf(WxLiner.prototype), 'update', this).call(this, datasets, WX_LINER_ITEM_DEFAULT_CONFIG);
+                        me.wxLayout.removeAllBox();
                         return me.draw();
                     }
 
@@ -2790,7 +2846,7 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
                 fullWidth: true, // if the fullWidth is false, the 'width' property should be existed.
                 labels: {
                     boxWidth: 30,
-                    fontSize: 10,
+                    fontSize: 11,
                     padding: 10 // Padding width between legend items
                 }
             };
@@ -3173,7 +3229,7 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
                 extendTop: 0,
                 title: undefined,
                 titleFontSize: 12,
-                titleFontColor: '#cccccc',
+                titleFontColor: '#4c4d4d',
                 //'lineSpace' = fontSize * 0.5'
                 color: '#000000', // Line color
                 lineWidth: 1,
@@ -3189,7 +3245,7 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
                     autoSkip: true,
                     lineWidth: 1,
                     fontColor: '#000000',
-                    fontSize: 10,
+                    fontSize: 11,
                     minRotation: 0,
                     maxRotation: 90
 
@@ -3341,7 +3397,12 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
                             maxWidth = area.outerWidth;
                             maxHeight = minHeight;
                         } else {
+                            var titleWidth = 0;
+                            if (config.title) {
+                                titleWidth = ctx.measureText(config.title, config.titleFontSize).width - lineWidth - lineSpace - fontSize / 2;
+                            }
                             minWidth = longestText + lineWidth + lineSpace + fontSize / 2;
+                            minWidth = minWidth > titleWidth ? minWidth : titleWidth;
                             if (minWidth > area.width) {
                                 minWidth = area.width;
                                 fontRadians = Math.acos((minWidth - lineWidth - lineSpace - fontSize / 2) / longestText);
@@ -3775,7 +3836,7 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
                 display: true,
                 position: 'top', // top, bottom
                 fullWidth: true, // if the fullWidth is false, the 'width' property should be existed.
-                fontSize: 20,
+                fontSize: 16,
                 fontColor: '#666666',
                 padding: 10
             };
@@ -3824,7 +3885,7 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
                         var me = this;
                         var wxChart = me.wxChart,
                             ctx = wxChart.ctx,
-                            fontSize = config.fontSize || 20;
+                            fontSize = config.fontSize || 16;
                         var x = area.x,
                             y = area.y;
                         var padding = config.padding || 10;
@@ -6834,7 +6895,7 @@ var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbo
                             var otherNum = textLen - hanziNum;
 
                             return {
-                                'width': fontSize * (otherNum + hanziNum * 2) / 2 + fontSize / 2
+                                'width': fontSize * (otherNum + hanziNum * 2) / 2 + fontSize / 4
                             };
                         } else {
                             return me._ctx.measureText(text);

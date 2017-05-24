@@ -1,0 +1,20 @@
+<view class="container">
+  
+  <view class="chart-container">
+    <text class="example-title">饼状图</text>
+    <canvas class="canvas" canvas-id="basePie" />
+    <button class="change-button" type="primary" bindtap="changeChart" data-canvas-name="basePie"> 变换数据 </button>
+  </view>
+
+  <view class="chart-container">
+    <text class="example-title">多纳圈图</text>
+    <canvas class="canvas" canvas-id="baseDoughnut" />
+    <button class="change-button" type="primary" bindtap="changeChart" data-canvas-name="baseDoughnut"> 变换数据 </button>
+  </view>
+
+  <view class="chart-container">
+    <text class="example-title">多纳圈图（扩散）</text>
+    <canvas class="canvas" canvas-id="percentageDoughnut" />
+    <button class="change-button" type="primary" bindtap="changeChart" data-canvas-name="percentageDoughnut"> 变换数据 </button>
+  </view>
+</view>
