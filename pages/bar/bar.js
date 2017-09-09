@@ -9,6 +9,7 @@ const labels = ['一月', '二月', '三月', '四月', '五月', '六月', '七
 
 // Base line chart
 let baseBar = windowWidth => {
+  
     let wxBar = new WxChart.WxBar('baseBar', {
         width: windowWidth,
         height: 350,
