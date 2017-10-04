@@ -24,7 +24,11 @@ App({
       })
     }
   },
-  globalData:{
-    userInfo:null
+  
+  onError: function (msg) {
+    // wx.showModal({
+    //   title: 'error',
+    //   content: msg
+    // })
   }
 })

@@ -9,6 +9,7 @@ const labels = ['一月', '二月', '三月', '四月', '五月', '六月', '七
 
 // Base line chart
 let baseBar = windowWidth => {
+  
     let wxBar = new WxChart.WxBar('baseBar', {
         width: windowWidth,
         height: 350,
@@ -171,7 +172,7 @@ Page({
 
     changeChart: function (e) {
         let canvasName = e.target.dataset.canvasName;
-        let chart = this.data[canvasName + 'Chart'];
+        let chart = this[canvasName + 'Chart'];
         chart.redraw();
     },
 
@@ -187,19 +188,10 @@ Page({
             // do something when get system info failed
         }
 
-        let baseBarChart = baseBar(windowWidth);
-        let multiBarChart = multiBar(windowWidth);
-        let multiNegBarChart = multiNegBar(windowWidth);
-        let multiStackBarChart = multiStackBar(windowWidth);
-        let multiStackNegBarChart = multiStackNegBar(windowWidth);
-
-        this.setData({
-            windowWidth: windowWidth,
-            baseBarChart: baseBarChart,
-            multiBarChart: multiBarChart,
-            multiNegBarChart: multiNegBarChart,
-            multiStackBarChart: multiStackBarChart,
-            multiStackNegBarChart: multiStackNegBarChart
-        });
+        this.baseBarChart = baseBar(windowWidth);
+        this.multiBarChart = multiBar(windowWidth);
+        this.multiNegBarChart = multiNegBar(windowWidth);
+        this.multiStackBarChart = multiStackBar(windowWidth);
+        this.multiStackNegBarChart = multiStackNegBar(windowWidth);
     }
 })

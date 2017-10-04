@@ -3,6 +3,7 @@
 let app = getApp()
 
 let WxChart = require("../../utils/wx-chart.js");
+let getChartInstances = WxChart.getChartInstances;
 let Utils = require("../../utils/util.js");
 
 const labels = ['一月', '二月', '三月', '四月', '五月', '六月', '七月'];
@@ -13,6 +14,7 @@ let formatLabel = function (label, value, totalValue) {
 let percentageFormatLabel = function (label, value, totalValue) {
     return label + ' (' + (value / totalValue * 100).toFixed(2) + '%)';
 };
+
 let basePie = windowWidth => {
 
     let wxPie = new WxChart.WxDoughnut('basePie', {
@@ -35,23 +37,19 @@ let baseDoughnut = windowWidth => {
     let wxPie = new WxChart.WxDoughnut('baseDoughnut', {
         width: windowWidth,
         height: 350,
-        title: '销售量'
+        title: '销售量',
+        point: {
+          format: percentageFormatLabel
+        }
     });
 
-    let datas = Utils.dataGenerator(labels);
-    datas.forEach(x => {
-        x.format = percentageFormatLabel;
-    });
-    wxPie.update(datas);
+    wxPie.update(Utils.dataGenerator(labels));
+
     return {
-        chart: wxPie,
-        redraw: () => {
-            let datas = Utils.dataGenerator(labels);
-            datas.forEach(x => {
-                x.format = percentageFormatLabel;
-            });
-            wxPie.update(datas);
-        }
+      chart: wxPie,
+      redraw: () => {
+        wxPie.update(Utils.dataGenerator(labels));
+      }
     };
 };
 
@@ -60,7 +58,10 @@ let percentageDoughnut = windowWidth => {
         width: windowWidth,
         height: 350,
         title: '销售额',
-        cutoutPercentage: 20
+        cutoutPercentage: 20,
+        point: {
+          format: percentageFormatLabel
+        }
     });
 
     let initPercentage = 40,
@@ -92,7 +93,7 @@ Page({
     data: {},
     changeChart: function (e) {
         let canvasName = e.target.dataset.canvasName;
-        let chart = this.data[canvasName + 'Chart'];
+        let chart = this[canvasName + 'Chart'];
         chart.redraw();
     },
     onLoad: function (options) {
@@ -107,16 +108,9 @@ Page({
             // do something when get system info failed
         }
 
-        let basePieChart = basePie(windowWidth);
-        let baseDoughnutChart = baseDoughnut(windowWidth);
-        let percentageDoughnutChart = percentageDoughnut(windowWidth);
-
-        this.setData({
-            windowWidth: windowWidth,
-            basePieChart: basePieChart,
-            baseDoughnutChart: baseDoughnutChart,
-            percentageDoughnutChart: percentageDoughnutChart
-        });
+        this.basePieChart = basePie(windowWidth);
+        this.baseDoughnutChart = baseDoughnut(windowWidth);
+        this.percentageDoughnutChart = percentageDoughnut(windowWidth);
     },
     onShow: function () {
         // 页面显示

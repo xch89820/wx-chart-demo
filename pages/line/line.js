@@ -11,7 +11,7 @@ const labels = ['一月', '二月', '三月', '四月', '五月', '六月', '七
 let baseLine = windowWidth => {
     let wxLiner = new WxChart.WxLiner('baseLine', {
         width: windowWidth,
-        height: 350,
+        height: 250,
         title: '销售额',
         yScaleOptions: {
             position: 'left',
@@ -34,7 +34,7 @@ let baseLine = windowWidth => {
 let multiLine = windowWidth => {
     let wxLiner = new WxChart.WxLiner('multiLine', {
         width: windowWidth,
-        height: 350,
+        height: 250,
         title: '销售额',
         yScaleOptions: {
             position: 'left',
@@ -61,7 +61,7 @@ let multiLine = windowWidth => {
 let multiFillLine = windowWidth => {
     let wxLiner = new WxChart.WxLiner('multiFillLine', {
         width: windowWidth,
-        height: 350,
+        height: 250,
         title: '销售额',
         yScaleOptions: {
             position: 'left',
@@ -105,7 +105,7 @@ Page({
 
     changeChart: function (e) {
         let canvasName = e.target.dataset.canvasName;
-        let chart = this.data[canvasName + 'Chart'];
+        let chart = this[canvasName + 'Chart'];
         chart.redraw();
     },
 
@@ -121,15 +121,8 @@ Page({
             // do something when get system info failed
         }
 
-        let baseLineChart = baseLine(windowWidth);
-        let multiLineChart = multiLine(windowWidth);
-        let multiFillLineChart = multiFillLine(windowWidth);
-
-        this.setData({
-            windowWidth: windowWidth,
-            baseLineChart: baseLineChart,
-            multiLineChart: multiLineChart,
-            multiFillLineChart: multiFillLineChart
-        });
+        this.baseLineChart = baseLine(windowWidth);
+        this.multiLineChart = multiLine(windowWidth);
+        this.multiFillLineChart = multiFillLine(windowWidth);
     }
 });

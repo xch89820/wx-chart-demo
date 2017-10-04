@@ -1,0 +1,3 @@
+.container .chart-container .canvas {
+    height: 250px;
+}
