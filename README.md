@@ -12,4 +12,3 @@
 
 [wx-chart](https://github.com/xch89820/wx-chart)以及此项目遵循 [MIT license](http://opensource.org/licenses/MIT)
 
-

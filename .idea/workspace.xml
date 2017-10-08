@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6a91c0a6-d559-41a5-a76f-cf965a78a2a8" name="Default" comment="Update to">
+    <list default="true" id="6a91c0a6-d559-41a5-a76f-cf965a78a2a8" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
     </list>
@@ -40,8 +40,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
             <state split_layout="FIRST">
-              <first_editor relative-caret-position="644">
-                <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+              <first_editor relative-caret-position="598">
+                <caret line="13" column="0" lean-forward="true" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
                 <folding />
               </first_editor>
               <second_editor>
@@ -242,7 +242,7 @@
       <workItem from="1507107631181" duration="21000" />
       <workItem from="1507107828501" duration="672000" />
       <workItem from="1507118360722" duration="691000" />
-      <workItem from="1507445511652" duration="456000" />
+      <workItem from="1507445511652" duration="552000" />
     </task>
     <task id="LOCAL-00001" summary="add git ignore">
       <created>1507107853397</created>
@@ -265,11 +265,18 @@
       <option name="project" value="LOCAL" />
       <updated>1507445853664</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Update to">
+      <created>1507446052490</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1507446052490</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3878000" />
+    <option name="totallyTimeSpent" value="3974000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-13" y="-13" width="3214" height="1746" extended-state="0" />
@@ -303,7 +310,8 @@
     <MESSAGE value="add git ignore" />
     <MESSAGE value="Update README" />
     <MESSAGE value="Update wx-charts to 0.3.3" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update wx-charts to 0.3.3" />
+    <MESSAGE value="Update to" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update to" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -534,8 +542,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="644">
-            <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <first_editor relative-caret-position="598">
+            <caret line="13" column="0" lean-forward="true" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
             <folding />
           </first_editor>
           <second_editor>
