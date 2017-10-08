@@ -6,7 +6,7 @@
 
 ## 实际效果
 
-<img src="https://user-images.githubusercontent.com/4920540/31174385-ef42f9ae-a93d-11e7-901f-fcf76b8302e9.gif" width="500">
+<img src="https://user-images.githubusercontent.com/4920540/31314671-e1b1f99a-ac38-11e7-9db0-5f9f0e2af6ca.gif" width="500">
 
 ## License
 
