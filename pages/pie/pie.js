@@ -5,15 +5,16 @@ let app = getApp()
 let WxChart = require("../../utils/wx-chart.js");
 let getChartInstances = WxChart.getChartInstances;
 let Utils = require("../../utils/util.js");
-
 const labels = ['一月', '二月', '三月', '四月', '五月', '六月', '七月'];
 
 let formatLabel = function (label, value, totalValue) {
     return label + ' (' + value + '万元)';
 };
-let percentageFormatLabel = function (label, value, totalValue) {
+let percentageFormatLabel = function (label, value, index, totalValue) {
     return label + ' (' + (value / totalValue * 100).toFixed(2) + '%)';
 };
+
+let tapHandlers = {};
 
 let basePie = windowWidth => {
 
@@ -25,6 +26,7 @@ let basePie = windowWidth => {
     });
 
     wxPie.update(Utils.dataGenerator(labels));
+    
     return {
         chart: wxPie,
         redraw: () => {
@@ -89,17 +91,19 @@ let percentageDoughnut = windowWidth => {
     };
 };
 
+
 Page({
     data: {},
     changeChart: function (e) {
         let canvasName = e.target.dataset.canvasName;
         let chart = this[canvasName + 'Chart'];
         chart.redraw();
-    },
+    }, 
     onLoad: function (options) {
         // 页面初始化 options为页面跳转所带来的参数
     },
     onReady: function () {
+        let me = this;
         let windowWidth = 320
         try {
             let res = wx.getSystemInfoSync();
@@ -108,9 +112,22 @@ Page({
             // do something when get system info failed
         }
 
-        this.basePieChart = basePie(windowWidth);
-        this.baseDoughnutChart = baseDoughnut(windowWidth);
-        this.percentageDoughnutChart = percentageDoughnut(windowWidth);
+        me.basePieChart = basePie(windowWidth);
+        me.baseDoughnutChart = baseDoughnut(windowWidth);
+        me.percentageDoughnutChart = percentageDoughnut(windowWidth);
+
+        // 绑定点击事件
+        me.basePieChart.chart.once('draw', function(views) {
+          me.basePieTapHandler = this.mouseoverTooltip(views);
+        }, me.basePieChart.chart);
+
+        me.baseDoughnutChart.chart.once('draw', function (views) {
+          me.baseDoughnutTapHandler = this.mouseoverTooltip(views);
+        }, me.baseDoughnutChart.chart);
+
+        me.percentageDoughnutChart.chart.once('draw', function (views) {
+          me.percentageDoughnutTapHandler = this.mouseoverTooltip(views);
+        }, me.percentageDoughnutChart.chart);
     },
     onShow: function () {
         // 页面显示

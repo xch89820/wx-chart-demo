@@ -2,7 +2,8 @@
   "pages":[
     "pages/pie/pie",
     "pages/line/line",
-    "pages/bar/bar"
+    "pages/bar/bar",
+    "pages/bubble/bubble"
   ],
   "window":{
     "backgroundTextStyle":"light",
@@ -27,6 +28,11 @@
     },{
       "pagePath": "pages/pie/pie",
       "text":"饼状图",
+      "iconPath": "images/icon_API.png",
+      "selectedIconPath": "images/icon_API_HL.png"
+    },{
+      "pagePath": "pages/bubble/bubble",
+      "text": "气泡图",
       "iconPath": "images/icon_API.png",
       "selectedIconPath": "images/icon_API_HL.png"
     }]

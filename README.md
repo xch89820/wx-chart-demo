@@ -6,7 +6,10 @@
 
 ## 实际效果
 
-<img src="https://user-images.githubusercontent.com/4920540/31314671-e1b1f99a-ac38-11e7-9db0-5f9f0e2af6ca.gif" width="500">
+<img src="https://user-images.githubusercontent.com/4920540/37877101-9716dc28-3088-11e8-8498-2ea1e8abea3a.gif" width="400">
+
+## ChangeLog
+升级wx-chart v1.0.0
 
 ## License
 

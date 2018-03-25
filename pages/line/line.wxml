@@ -1,21 +1,20 @@
 <!-- line.wxml -->
 <view class="container">
-  
   <view class="chart-container">
     <text class="example-title">单数据曲线图</text>
-    <canvas class="canvas" canvas-id="baseLine" />
+    <canvas class="canvas" canvas-id="baseLine" bindtouchend='baseLineChartTapHandler'/>
     <button class="change-button" type="primary" bindtap="changeChart" data-canvas-name="baseLine"> 变换数据 </button>
   </view>
   
   <view class="chart-container">
     <text class="example-title">多数据曲线图</text>
-    <canvas class="canvas" canvas-id="multiLine" />
+    <canvas class="canvas" canvas-id="multiLine" bindtouchend='multiLineChartTapHandler'/>
     <button class="change-button" type="primary" bindtap="changeChart" data-canvas-name="multiLine"> 变换数据 </button>
   </view>
 
   <view class="chart-container">
     <text class="example-title">多数据填充图</text>
-    <canvas class="canvas" canvas-id="multiFillLine" />
+    <canvas class="canvas" canvas-id="multiFillLine" bindtouchend='multiFillLineChartTapHandler'/>
     <button class="change-button" type="primary" bindtap="changeChart" data-canvas-name="multiFillLine"> 变换数据 </button>
   </view>
 </view>

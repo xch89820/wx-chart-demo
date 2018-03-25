@@ -2,19 +2,19 @@
   
   <view class="chart-container">
     <text class="example-title">饼状图</text>
-    <canvas class="canvas" canvas-id="basePie" />
+    <canvas class="canvas" canvas-id="basePie" bindtouchend="basePieTapHandler"/>
     <button class="change-button" type="primary" bindtap="changeChart" data-canvas-name="basePie"> 变换数据 </button>
   </view>
 
   <view class="chart-container">
     <text class="example-title">多纳圈图</text>
-    <canvas class="canvas" canvas-id="baseDoughnut" />
+    <canvas class="canvas" canvas-id="baseDoughnut" bindtouchend="baseDoughnutTapHandler"/>
     <button class="change-button" type="primary" bindtap="changeChart" data-canvas-name="baseDoughnut"> 变换数据 </button>
   </view>
 
   <view class="chart-container">
     <text class="example-title">多纳圈图（扩散）</text>
-    <canvas class="canvas" canvas-id="percentageDoughnut" />
+    <canvas class="canvas" canvas-id="percentageDoughnut" bindtouchend="percentageDoughnutTapHandler"/>
     <button class="change-button" type="primary" bindtap="changeChart" data-canvas-name="percentageDoughnut"> 变换数据 </button>
   </view>
 </view>

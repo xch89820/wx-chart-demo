@@ -1,0 +1,16 @@
+<!-- bubble.wxml -->
+<view class="container">
+  
+  <view class="chart-container">
+    <text class="example-title">单数据气泡图</text>
+    <canvas class="canvas" canvas-id="baseBubble" bindtouchend='baseBubbleChartTapHandler'/>
+    <button class="change-button" type="primary" bindtap="changeChart" data-canvas-name="baseBubble"> 变换数据 </button>
+  </view>
+
+  <view class="chart-container">
+    <text class="example-title">多数据气泡图</text>
+    <canvas class="canvas" canvas-id="multiBubble" bindtouchend='multiBubbleChartTapHandler'/>
+    <button class="change-button" type="primary" bindtap="changeChart" data-canvas-name="multiBubble"> 变换数据 </button>
+  </view>
+
+</view>

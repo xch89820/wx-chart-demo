@@ -46,7 +46,10 @@ let multiLine = windowWidth => {
         }, {
             text: '水果',
             key: 'fruit'
-        }]
+        }],
+        tooltip: {
+          model: 'axis'
+        }
     });
 
     wxLiner.update(Utils.dataGenerator(labels, ['chocolate', 'fruit']));
@@ -85,7 +88,10 @@ let multiFillLine = windowWidth => {
         }, {
             text: '家电',
             key: 'appliances'
-        }]
+        }],
+        tooltip: {
+          model: 'axis'
+        }
     });
 
     wxLiner.update(Utils.dataGenerator(labels, ['dailyNecessities', 'fruit', 'appliances']));
@@ -96,6 +102,8 @@ let multiFillLine = windowWidth => {
         }
     };
 };
+
+
 
 Page({
     /**
@@ -113,7 +121,8 @@ Page({
      * 生命周期函数--监听页面初次渲染完成
      */
     onReady: function () {
-        let windowWidth = 320
+        let me = this;
+        let windowWidth = 320;
         try {
             let res = wx.getSystemInfoSync();
             windowWidth = res.windowWidth;
@@ -121,8 +130,20 @@ Page({
             // do something when get system info failed
         }
 
-        this.baseLineChart = baseLine(windowWidth);
-        this.multiLineChart = multiLine(windowWidth);
-        this.multiFillLineChart = multiFillLine(windowWidth);
+        me.baseLineChart = baseLine(windowWidth);
+        me.multiLineChart = multiLine(windowWidth);
+        me.multiFillLineChart = multiFillLine(windowWidth);
+
+        me.baseLineChart.chart.once('draw', function (views) {
+          me.baseLineChartTapHandler = this.mouseoverTooltip(views);
+        }, me.baseLineChart.chart);
+
+        me.multiLineChart.chart.once('draw', function (views) {
+          me.multiLineChartTapHandler = this.mouseoverTooltip(views);
+        }, me.multiLineChart.chart);
+
+        me.multiFillLineChart.chart.once('draw', function (views) {
+          me.multiFillLineChartTapHandler = this.mouseoverTooltip(views);
+        }, me.multiFillLineChart.chart);
     }
 });

@@ -47,7 +47,10 @@ let multiBar = windowWidth => {
         }, {
             text: '水果',
             key: 'fruit'
-        }]
+        }],
+        tooltip: {
+          model: 'axis'
+        }
     });
 
     wxBar.update(Utils.dataGenerator(labels, ['chocolate', 'fruit']));
@@ -81,7 +84,10 @@ let multiNegBar = windowWidth => {
         }, {
             text: '家电',
             key: 'appliances'
-        }]
+        }],
+        tooltip: {
+          model: 'axis'
+        }
     });
 
     wxBar.update(Utils.dataGenerator(labels, ['dailyNecessities', 'fruit', 'appliances'], -20, 60));
@@ -116,7 +122,10 @@ let multiStackBar = windowWidth => {
         }, {
             text: '家电',
             key: 'appliances'
-        }]
+        }],
+        tooltip: {
+          model: 'axis'
+        }
     });
 
     wxBar.update(Utils.dataGenerator(labels, ['dailyNecessities', 'fruit', 'appliances']));
@@ -151,7 +160,10 @@ let multiStackNegBar = windowWidth => {
         }, {
             text: '家电',
             key: 'appliances'
-        }]
+        }],
+        tooltip: {
+          model: 'axis'
+        }
     });
 
     wxBar.update(Utils.dataGenerator(labels, ['dailyNecessities', 'fruit', 'appliances'], -20, 60));
@@ -169,7 +181,6 @@ Page({
      * 页面的初始数据
      */
     data: {},
-
     changeChart: function (e) {
         let canvasName = e.target.dataset.canvasName;
         let chart = this[canvasName + 'Chart'];
@@ -180,6 +191,7 @@ Page({
      * 生命周期函数--监听页面初次渲染完成
      */
     onReady: function () {
+        let me = this;
         let windowWidth = 320;
         try {
             let res = wx.getSystemInfoSync();
@@ -188,10 +200,30 @@ Page({
             // do something when get system info failed
         }
 
-        this.baseBarChart = baseBar(windowWidth);
-        this.multiBarChart = multiBar(windowWidth);
-        this.multiNegBarChart = multiNegBar(windowWidth);
-        this.multiStackBarChart = multiStackBar(windowWidth);
-        this.multiStackNegBarChart = multiStackNegBar(windowWidth);
+        me.baseBarChart = baseBar(windowWidth);
+        me.multiBarChart = multiBar(windowWidth);
+        me.multiNegBarChart = multiNegBar(windowWidth);
+        me.multiStackBarChart = multiStackBar(windowWidth);
+        me.multiStackNegBarChart = multiStackNegBar(windowWidth);
+
+        me.baseBarChart.chart.once('draw', function (views) {
+          me.baseBarChartTapHandler = this.mouseoverTooltip(views);
+        }, me.baseBarChart.chart);
+
+        me.multiBarChart.chart.once('draw', function (views) {
+          me.multiBarChartTapHandler = this.mouseoverTooltip(views);
+        }, me.multiBarChart.chart);
+
+        me.multiNegBarChart.chart.once('draw', function (views) {
+          me.multiNegBarChartTapHandler = this.mouseoverTooltip(views);
+        }, me.multiNegBarChart.chart);
+
+        me.multiStackBarChart.chart.once('draw', function (views) {
+          me.multiStackBarChartTapHandler = this.mouseoverTooltip(views);
+        }, me.multiStackBarChart.chart);
+
+        me.multiStackNegBarChart.chart.once('draw', function (views) {
+          me.multiStackNegBarChartTapHandler = this.mouseoverTooltip(views);
+        }, me.multiStackNegBarChart.chart);
     }
 })
